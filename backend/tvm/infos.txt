@@ -1,4 +1,6 @@
 If use another machine
 
 1) create database todolist
-2) create table 
+2) create table tasks with fields
+
+done!
