@@ -1,10 +1,11 @@
 const tbody = document.querySelector('tbody');
+let urlBase = 'http://localhost:3333/tasks';
 const addForm = document.querySelector('.add-task');
 const inputTask = document.querySelector('.input-task')
 
 //Fetching data from BD
 const fetchTasks = async () => {
-  const response = await fetch('http://localhost:3333/tasks')
+  const response = await fetch(urlBase);
   const tasks = await response.json()
   return tasks;
 } 
@@ -15,16 +16,14 @@ const addTask = async (event) => {
 
   const task = { title: inputTask.value };
 
-  await fetch('https://localhost:3333/tasks', {
+  await fetch(urlBase, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(task),
 
   });
+  loadTasks();
 }
-
-
-
 
 
 //Criando funcao que criam tags:
@@ -47,7 +46,6 @@ const options = `
 <option value="working">Working</option>
 <option value="done">Done</option>
 `;
-
 const select = createElement('select', '', options);
 select.value = value;
 return select;

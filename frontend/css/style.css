@@ -56,7 +56,8 @@ cursor: pointer;
 
 table {
     border-collapse: collapse;
-    width: 100px;
+    width: 100%;
+    
     }
     td, td {
         padding: 10px 15px;
