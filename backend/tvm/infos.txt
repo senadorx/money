@@ -1,0 +1,4 @@
+If use another machine
+
+1) create database todolist
+2) create table 
