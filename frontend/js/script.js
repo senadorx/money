@@ -1,5 +1,5 @@
-const tbody = document.querySelector('tbody');
 let urlBase = 'http://localhost:3333/tasks';
+const tbody = document.querySelector('tbody');
 const addForm = document.querySelector('.add-task');
 const inputTask = document.querySelector('.input-task')
 
@@ -23,7 +23,26 @@ const addTask = async (event) => {
 
   });
   loadTasks();
+  inputTask.value = '';
 }
+
+const deleteTask = async (id) => {
+  await fetch(`urlBase/${id}`, {
+    method: 'delete',
+  });
+  //loadTasks();
+
+}
+
+
+
+const formatDate = (dateUTC) => {
+  const options = { dateStyle: 'short', timeStyle: 'short' }
+  const date = new Date(dateUTC).toLocaleString('pt-br', options)
+  return date;
+
+}
+
 
 
 //Criando funcao que criam tags:
@@ -52,7 +71,7 @@ return select;
 }
 
 
-//Creating task manually
+
 // const task = {
 //   id: 1,
 //   title:'Inscreva-se no canal 3',
@@ -66,7 +85,7 @@ return select;
 
   const tr = createElement('tr');
   const tdTitle = createElement('td', title);
-  const tdCreatedAt = createElement('td', created_at);
+  const tdCreatedAt = createElement('td', formatDate(created_at));
   const tdStatus = createElement('td');
   const tdActions = createElement('td');
 
@@ -82,6 +101,8 @@ return select;
   editButton.classList.add('btn-action');
   deleteButton.classList.add('btn-action');
 
+  deleteButton.addEventListener('click', () => deleteTask(id));
+
   tdStatus.appendChild(select);
 
   tdActions.appendChild(editButton);
@@ -96,11 +117,11 @@ return select;
 
   //tbody.appendChild(tr);
 }
-//createRow(task); 
 
 //Loading Tasks from api
 const loadTasks = async () => {
   const tasks = await fetchTasks();
+  tbody.innerHTML = '';
   tasks.forEach((task) => {
     const tr = createRow(task);
     tbody.appendChild(tr);
