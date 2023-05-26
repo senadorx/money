@@ -1,4 +1,5 @@
 let urlBase = 'http://localhost:3333/tasks';
+//let url = 'http://localhost:3333/tasks';
 const tbody = document.querySelector('tbody');
 const addForm = document.querySelector('.add-task');
 const inputTask = document.querySelector('.input-task')
@@ -26,14 +27,31 @@ const addTask = async (event) => {
   inputTask.value = '';
 }
 
-const deleteTask = async (id) => {
-  await fetch(`urlBase/${id}`, {
-    method: 'delete',
-  });
+// const deleteTask = async (id) => {
+//   await fetch(`urlBase/${id}`, {
+//     method: 'delete',
+//   });
   //loadTasks();
 
+//}
+
+const deleteTask = async (id) => {
+  //alert('Delete task: ' + id)
+  await fetch(`http://localhost:3333/tasks/${id}`, {
+    method: 'delete',
+  })
+  loadTasks();
 }
 
+const updateTask = async (task) => {
+  const {id, title, status } = task;
+  await fetch(`http://localhost:3333/tasks/${id}`, {
+    method: 'put',
+    headers: { 'Content-Type': 'application/json' },
+    body: { title, status }
+
+  })
+}
 
 
 const formatDate = (dateUTC) => {
@@ -42,8 +60,6 @@ const formatDate = (dateUTC) => {
   return date;
 
 }
-
-
 
 //Criando funcao que criam tags:
 const createElement = (tag, innerText = '', innerHTML = '') => {
@@ -100,8 +116,8 @@ return select;
   
   editButton.classList.add('btn-action');
   deleteButton.classList.add('btn-action');
-
-  deleteButton.addEventListener('click', () => deleteTask(id));
+  deleteButton.addEventListener('click', () => deleteTask(id))
+//deleteButton.addEventListener('click', () => deleteTask(id));
 
   tdStatus.appendChild(select);
 
